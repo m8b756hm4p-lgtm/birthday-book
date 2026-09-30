@@ -1,1 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Book</title>
 
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #1b1b1b;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+.book {
+  width: 90vw;
+  max-width: 700px;
+  aspect-ratio: 1.4 / 1;
+  position: relative;
+  perspective: 2000px;
+}
+
+.page {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  background: white;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+  box-shadow: 0 5px 20px rgba(0,0,0,.4);
+}
+
+.left {
+  left: 0;
+  transform-origin: right center;
+}
+
+.right {
+  right: 0;
+  transform-origin: left center;
+}
+
+.page img {
+  width: 200%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.left img {
+  position: absolute;
+  left: 0;
+}
+
+.right img {
+  position: absolute;
+  right: 0;
+}
+
+.cover {
+  position: absolute;
+  inset: 0;
+  background: #6b4635;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 28px;
+  z-index: 10;
+  cursor: pointer;
+  transform-origin: left center;
+  transition: transform 1.2s ease;
+}
+
+.cover.open {
+  transform: rotateY(-150deg);
+  pointer-events: none;
+}
+
+.next {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.flip {
+  transform: rotateY(-180deg);
+  z-index: 5;
+}
+
+.hint {
+  position: fixed;
+  bottom: 25px;
+  color: white;
+  font-size: 14px;
+  opacity: .7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="book">
+
+  <!-- 表紙 -->
+  <div class="cover" id="cover">
+    tap to open
+  </div>
+
+  <!-- 左ページ -->
+  <div class="page left">
+    <img src="spread.png">
+  </div>
+
+  <!-- 右ページ -->
+  <div class="page right" id="page1">
+    <img src="spread.png">
+  </div>
+
+  <!-- タップする場所 -->
+  <div class="next" id="next"></div>
+
+</div>
+
+<div class="hint">Tap the page</div>
+
+<script>
+
+const cover = document.getElementById("cover");
+const page = document.getElementById("page1");
+const next = document.getElementById("next");
+
+cover.addEventListener("click", () => {
+  cover.classList.add("open");
+});
+
+next.addEventListener("click", () => {
+  page.classList.toggle("flip");
+});
+
+</script>
+
+</body>
+</html>
